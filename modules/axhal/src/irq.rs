@@ -14,6 +14,11 @@ pub use axconfig::devices::IPI_IRQ;
 
 static IRQ_HOOK: AtomicUsize = AtomicUsize::new(0);
 
+#[cfg(all(target_arch = "x86_64", feature = "defplat"))]
+pub fn mark_poll_irq(irq: usize) {
+    axplat_x86_pc::mark_poll_irq(irq);
+}
+
 /// Register a hook function called after an IRQ is handled.
 ///
 /// This function can be called only once; subsequent calls will return false.
